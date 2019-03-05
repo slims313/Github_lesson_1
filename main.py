@@ -29,14 +29,19 @@ def open_file():
             vals.append(val)
 
     f.close()
-
-
     return bd
+
 
 def write_file(bd):
     f = open('text_ru.txt', 'wt', encoding='utf-8')
-    f.write(str(bd))
+    for k in bd.keys():
+        keys = "0 " + str(k) + '\n'
+        f.write(keys)
+        for v in bd[k]:
+            value = "1 " + str(v) + '\n'
+            f.write(value)
     f.close()
+
 
 def speak():
     ask = ''
