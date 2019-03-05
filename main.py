@@ -16,13 +16,13 @@ def open_file():
         l = line.strip()
 
         if l[0] == '0':
-            if len(keys) > 0:
-                bd[key] = vals
-                keys = []
-
             key = l[2::].lower()
             keys.append(key)
             vals = []
+
+            if len(keys) > 0:
+                bd[key] = vals
+                keys = []
 
         if l[0] == '1':
             val = l[2::]  #.lower()
