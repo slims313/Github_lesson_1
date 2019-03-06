@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
 import random
+from Slovar import *
 
+
+vopros = False
+otvet = False
+prosba = False
+privet = False
+poka = False
 
 def open_file():
     bd = {}
@@ -43,25 +50,63 @@ def write_file(bd):
     f.close()
 
 
+def razbor(ask):
+    # Захват знака припинания
+    znak = ask[-1]
+    # Разбиение по словам
+    ask_list_edite = []
+    ask_list = ask.split(' ')
+    for i in ask_list:
+        ask_list_edite.append(i.strip(',').strip('.').strip('!').strip('?').strip(' '))
+
+    form(ask_list_edite, znak)
+#     Привет, как твои дела?
+
+def form(list, znak):
+    vopros = True
+    otvet = False
+    prosba = False
+    privet = False
+    poka = False
+
+    for i in voprosi:
+        if i in list or znak == '?':
+            vopros = True
+
+    for i in priveti:
+        if i in list:
+            privet = True
+
+    # print('vopros', vopros, '\n', 'otvet', otvet, '\n', 'prosba', prosba, '\n', 'privet', privet, '\n', 'poka', poka)
+
+
 def speak():
     ask = ''
     bd = open_file()
     while ask != 'пока':
         say = ''
         ask = str(input('Говорите ************** \n')).lower()
+        # Шаблонные выражения
         for i in bd:
             if i == ask:
                 say = bd[i][random.randint(0, len(bd[i])-1)]
+                break
+
+        # Разбор выражения пользователя
+        razbor(ask)
+
+
+        # else:
+        #     print('Не понятно, укажите возможный ответ!\n')
+        #     new = str(input())  # .lower()
+        #     key = ask
+        #
+        #     bd[key] = (new, )
+        #     write_file(bd)
+
         if say == '':
-            print('Не понятно, укажите возможный ответ!\n')
-            new = str(input())  #.lower()
-            key = ask
+            print('Не молчи! \n')
 
-            bd[key] = (new,)
-            write_file(bd)
-
-        print(bd)
         print(say)
 
-# open_file()
 speak()
